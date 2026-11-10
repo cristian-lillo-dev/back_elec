@@ -38,7 +38,6 @@ class OpcionPreguntaLeccionSerializer(serializers.ModelSerializer):
 
 
 class PreguntaLeccionSerializer(serializers.ModelSerializer):
-    # Quitamos read_only=True para permitir recibir y actualizar las opciones
     opciones = OpcionPreguntaLeccionSerializer(many=True, required=False)
 
     class Meta:
@@ -142,17 +141,18 @@ class TransaccionSerializer(serializers.ModelSerializer):
 
 
 # -------------------------------------------------------------------------
-# 5. Usuario y Perfil 1 a 1
+# 5. Usuario y Perfil 1 a 1 (Con soporte robusto de escritura anidada)
 # -------------------------------------------------------------------------
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
+        extra_kwargs = {'password': {'write_only': True}}
 
 
 class PerfilUsuarioSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserSerializer()
     progresos = ProgresoUsuarioSerializer(many=True, read_only=True)
     transacciones = TransaccionSerializer(many=True, read_only=True)
 
@@ -167,3 +167,18 @@ class PerfilUsuarioSerializer(serializers.ModelSerializer):
             'progresos',
             'transacciones'
         ]
+
+    def create(self, validated_data):
+        # Extraemos los datos del usuario enviados desde la petición
+        user_data = validated_data.pop('user', None)
+        if not user_data:
+            raise serializers.ValidationError({"user": "Los datos del usuario son obligatorios."})
+
+        password = user_data.pop('password', None)
+
+        # Creamos el usuario asegurando el uso de create_user para hashear la contraseña correctamente
+        user = User.objects.create_user(password=password, **user_data)
+
+        # Creamos el perfil vinculado al usuario recién creado
+        perfil = PerfilUsuario.objects.create(user=user, **validated_data)
+        return perfil
