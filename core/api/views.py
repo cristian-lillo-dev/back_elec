@@ -99,3 +99,28 @@ class TransaccionViewSet(viewsets.ModelViewSet):
         if usuario_id:
             queryset = queryset.filter(usuario_id=usuario_id)
         return queryset
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate
+from .serializers import PerfilUsuarioSerializer
+
+@api_view(['POST'])
+def api_login(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    
+    # Autenticamos contra la tabla auth_user de Django
+    user = authenticate(username=username, password=password)
+    
+    if user is not None:
+        try:
+            # Obtenemos el perfil asociado usando el OneToOneField
+            perfil = user.perfil 
+            serializer = PerfilUsuarioSerializer(perfil)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({"error": "El usuario existe pero no tiene un perfil asociado."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)

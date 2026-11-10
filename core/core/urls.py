@@ -1,22 +1,24 @@
-"""
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import (
+    UnidadViewSet, LeccionViewSet, PaginaLeccionViewSet,
+    ContenidoLeccionViewSet, PreguntaLeccionViewSet,
+    OpcionPreguntaLeccionViewSet, PerfilUsuarioSerializer, PerfilUsuarioViewSet,
+    ProgresoUsuarioViewSet, TransaccionViewSet, api_login
+)
+
+router = DefaultRouter()
+router.register(r'unidades', UnidadViewSet, basename='unidad')
+router.register(r'lecciones', LeccionViewSet, basename='leccion')
+router.register(r'paginas', PaginaLeccionViewSet, basename='pagina')
+router.register(r'contenidos', ContenidoLeccionViewSet, basename='contenido')
+router.register(r'preguntas', PreguntaLeccionViewSet, basename='pregunta')
+router.register(r'opciones', OpcionPreguntaLeccionViewSet, basename='opcion')
+router.register(r'perfiles', PerfilUsuarioViewSet, basename='perfil')
+router.register(r'progresos', ProgresoUsuarioViewSet, basename='progreso')
+router.register(r'transacciones', TransaccionViewSet, basename='transaccion')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),  path('api/', include('api.urls')),
+    path('', include(router.urls)),
+    path('login/', api_login, name='api-login'),  # 👈 Endpoint directo para autenticación
 ]
