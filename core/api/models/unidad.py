@@ -1,8 +1,9 @@
-from django.db import models  
+from django.db import models
+
 
 class Unidad(models.Model):
     tema = models.ForeignKey(
-        Tema, 
+        'Tema',  # <-- Debe ir entre comillas
         on_delete=models.CASCADE, 
         related_name='unidades',
         verbose_name='Tema'
