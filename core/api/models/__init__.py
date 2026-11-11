@@ -4,6 +4,7 @@ from .leccion import Leccion, PaginaLeccion, ContenidoLeccion
 from .pregunta import PreguntaLeccion, OpcionPreguntaLeccion
 from .progreso import ProgresoUsuario
 from .transaccion import Transaccion
+from .temas import Tema
 
 all = [
 'PerfilUsuario',
@@ -15,4 +16,5 @@ all = [
 'OpcionPreguntaLeccion',
 'ProgresoUsuario',
 'Transaccion',
+'Tema'
 ]
