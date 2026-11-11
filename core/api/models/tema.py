@@ -5,6 +5,7 @@ class Tema(models.Model):
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField(blank=True, null=True)
     orden = models.IntegerField(default=1)
+    bandera = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'tema'
