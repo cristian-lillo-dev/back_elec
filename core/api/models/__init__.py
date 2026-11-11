@@ -6,15 +6,15 @@ from .progreso import ProgresoUsuario
 from .transaccion import Transaccion
 from .temas import Tema
 
-all = [
-'PerfilUsuario',
-'Unidad',
-'Leccion',
-'PaginaLeccion',
-'ContenidoLeccion',
-'PreguntaLeccion',
-'OpcionPreguntaLeccion',
-'ProgresoUsuario',
-'Transaccion',
-'Tema'
+__all__ = [
+    'PerfilUsuario',
+    'Unidad',
+    'Leccion',
+    'PaginaLeccion',
+    'ContenidoLeccion',
+    'PreguntaLeccion',
+    'OpcionPreguntaLeccion',
+    'ProgresoUsuario',
+    'Transaccion',
+    'Tema',
 ]
