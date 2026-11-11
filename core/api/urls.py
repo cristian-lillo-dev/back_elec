@@ -19,6 +19,6 @@ router.register(r'progresos', ProgresoUsuarioViewSet, basename='progreso')
 router.register(r'transacciones', TransaccionViewSet, basename='transaccion')
 
 urlpatterns = [
-    path('api/login/', api_login, name='api-login'),
-    path('api/', include(router.urls)), # O déjalo en la raíz si tus ViewSets ya responden en api/
+    path('login/', api_login, name='api-login'),
+    path('/', include(router.urls)), # O déjalo en la raíz si tus ViewSets ya responden en api/
 ]
