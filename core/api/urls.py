@@ -4,7 +4,7 @@ from .views import (
     UnidadViewSet, LeccionViewSet, PaginaLeccionViewSet,
     ContenidoLeccionViewSet, PreguntaLeccionViewSet,
     OpcionPreguntaLeccionViewSet, PerfilUsuarioViewSet,
-    ProgresoUsuarioViewSet, TransaccionViewSet,api_login
+    ProgresoUsuarioViewSet, TransaccionViewSet, api_login
 )
 
 router = DefaultRouter()
@@ -19,5 +19,6 @@ router.register(r'progresos', ProgresoUsuarioViewSet, basename='progreso')
 router.register(r'transacciones', TransaccionViewSet, basename='transaccion')
 
 urlpatterns = [
-    path('', include(router.urls)), path('login/', api_login), 
+    path('api/login/', api_login, name='api-login'),
+    path('api/', include(router.urls)), # O déjalo en la raíz si tus ViewSets ya responden en api/
 ]

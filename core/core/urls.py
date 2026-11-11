@@ -8,3 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]
+
+
+for pattern in get_resolver().url_patterns:
+    print(pattern)
