@@ -1,5 +1,5 @@
 from django.db import models
-from .temas import Tema
+
 
 class Tema(models.Model):
     nombre = models.CharField(max_length=255)
