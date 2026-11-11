@@ -108,6 +108,7 @@ class TransaccionViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def api_login(request):
+    print("LLEGUE AL LOGIN")
     username = request.data.get('username')
     password = request.data.get('password')
     
