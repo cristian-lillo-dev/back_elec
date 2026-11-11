@@ -1,7 +1,12 @@
 from django.db import models
-
-
+from .temas import Tema
 class Unidad(models.Model):
+    tema = models.ForeignKey(
+        Tema, 
+        on_delete=models.CASCADE, 
+        related_name='unidades',
+        verbose_name='Tema'
+    )
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField(blank=True, null=True)
     pdf_url = models.URLField(max_length=500, blank=True, null=True)
