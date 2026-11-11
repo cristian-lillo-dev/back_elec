@@ -1,5 +1,5 @@
 from django.db import models
-from .temas import Tema
+
 class Unidad(models.Model):
     tema = models.ForeignKey(
         Tema, 
