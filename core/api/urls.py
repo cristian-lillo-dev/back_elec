@@ -4,7 +4,7 @@ from .views import (
     UnidadViewSet, LeccionViewSet, PaginaLeccionViewSet,
     ContenidoLeccionViewSet, PreguntaLeccionViewSet,
     OpcionPreguntaLeccionViewSet, PerfilUsuarioViewSet,
-    ProgresoUsuarioViewSet, TransaccionViewSet
+    ProgresoUsuarioViewSet, TransaccionViewSet,api_login
 )
 
 router = DefaultRouter()
@@ -19,5 +19,5 @@ router.register(r'progresos', ProgresoUsuarioViewSet, basename='progreso')
 router.register(r'transacciones', TransaccionViewSet, basename='transaccion')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls)), path('login/', api_login), 
 ]

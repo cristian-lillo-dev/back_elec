@@ -10,7 +10,11 @@ from .serializers import (
     PreguntaLeccionSerializer, OpcionPreguntaLeccionSerializer,
     ProgresoUsuarioSerializer, TransaccionSerializer
 )
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate
+from .serializers import PerfilUsuarioSerializer
 
 class UnidadViewSet(viewsets.ModelViewSet):
     queryset = Unidad.objects.all().prefetch_related('lecciones')
@@ -100,11 +104,7 @@ class TransaccionViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(usuario_id=usuario_id)
         return queryset
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth import authenticate
-from .serializers import PerfilUsuarioSerializer
+
 
 @api_view(['POST'])
 def api_login(request):
